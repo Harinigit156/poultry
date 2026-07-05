@@ -1,0 +1,108 @@
+
+.wishlist-page {
+  min-height: 100vh;
+  padding: 30px;
+  background: chocolate;
+}
+
+.wishlist-page h1 {
+  text-align: center;
+  font-size: 45px;
+  margin-bottom: 40px;
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.wishlist-page h2 {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 100px;
+  color: #666;
+}
+
+.wishlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+
+.wishlist-card {
+  width: 320px;
+  background: beige;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  text-align: center;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-5px);
+}
+
+
+.wishlist-card img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+
+.wishlist-card h3 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #222;
+}
+
+
+.wishlist-card h4 {
+  font-size: 22px;
+  color: black;
+  margin-bottom: 20px;
+}
+.wishlist-card button {
+  width: 90%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.move {
+  background: chocolate;
+  color: white;
+}
+
+.move:hover {
+  background: #e68900;
+}
+
+/* Remove Button */
+.remove {
+  background: #e53935;
+  color: white;
+}
+
+.remove:hover {
+  background: #c62828;
+}
+.wishlist-page{
+    position: relative;
+}
+
+.wishlist-animation{
+    position: absolute;
+    top: 20px;
+    left: 85%;
+}
+
+.wishlist-svg{
+    width: 235px;
+    height: 190px;
+}
