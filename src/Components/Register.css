@@ -1,0 +1,75 @@
+body {
+  background: fixed;
+ 
+}
+.rg
+{
+  
+  background-color: beige;
+  text-align: center;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  width: 450px;
+  height: 600px;
+  color: white;
+  border-radius: 50px;
+  display: block;
+  position: absolute;
+  left: 38%;
+  bottom: 15%;
+  transition: 0.5s;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  border: 3px solid black;
+  
+}
+.rg:hover{
+  transform: translateY(3px);
+}
+.rg input{
+  width : 280px;
+  height:30px;
+  border: 2px black solid;
+  border-radius: 8px;
+  color: black;
+  margin: 10px;
+}
+input::placeholder {
+  color: black;
+  font-size: 16px;
+}
+.rg h1{
+  margin: 80px;
+  font-size: 50px;
+  color: black;
+}
+.rg p{
+  margin: 40px;
+  color: black;
+}
+
+
+.register{
+  background-color: chocolate;
+  border:none;
+  color: white;
+  padding: 10px 10px;
+  width: 150px;
+  font-size: 20px;
+  border-radius: 6px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bolder;
+  border: 3px solid black;
+}
+.register:hover{
+  background-color:white;
+  opacity: 0.6s;
+  cursor: pointer;
+  color:black;
+}
+.egggif
+{
+    width:380px;
+    height:350px;
+    position: absolute;
+    left:-90%;
+    top:15%;
+}

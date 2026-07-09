@@ -1,0 +1,36 @@
+.dash
+{
+  text-align: center;
+}
+.dash h1{
+  font-size: 65px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.dash p{
+  font-weight: bolder;
+  font-size: 40px;;
+}
+.dash h2{
+  font-size: 50px;
+}
+.link
+{
+  text-decoration: none;
+  text-align: center;
+  font-size: 35px;
+  color: blue;
+}
+.c
+{
+  width: 280px;
+  height: 280px;
+  position: absolute;
+  left: 8%;
+  bottom: 40%;
+}
+.h{
+  width: 280px;
+  height: 280px;
+  position: absolute;
+  left: 75%;
+}

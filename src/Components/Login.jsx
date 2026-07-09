@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import './Login.css';
+import gif from "../assets/gif.gif";
 
 function Login() {
 
@@ -42,7 +44,12 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="cl">
+     <img
+  src={gif}
+  alt="Chicken"
+  className="gif"
+/>
       <h1>Login</h1>
 
       <form onSubmit={handleLogin}>
@@ -63,7 +70,7 @@ function Login() {
 
         <br /><br />
 
-        <button type="submit">
+        <button type="submit" className="button">
           Login
         </button>
 

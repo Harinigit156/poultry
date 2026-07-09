@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import './Register.css';
+import egggif from "../assets/egggif.gif";
 function Register() {
 
   const [name, setName] = useState("");
@@ -48,7 +49,12 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="rg">
+      <img
+        src={egggif}
+        alt="Chicken"
+        className="egggif"
+      />
 
       <h1>Register</h1>
 
@@ -90,7 +96,7 @@ function Register() {
 
         <br /><br />
 
-        <button type="submit">
+        <button type="submit" className="register">
           Register
         </button>
 
