@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Products.css";
 
 import chickenmeat from "../assets/chickenmeat.png";
@@ -8,14 +8,47 @@ import chickenpair from "../assets/chickenpair.png";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { MdShoppingBag } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Products() {
   const navigate = useNavigate();
 
-  // ===========================
+ 
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Login",
+        text: "You need to login to view products.",
+        confirmButtonColor: "chocolate",
+      })
+    }
+  }, [navigate]);
+
+  // Check Login Before Any Action
+  const checkLogin = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Login",
+        text: "Please login to continue.",
+        confirmButtonColor: "chocolate",
+      })
+
+      return false;
+    }
+
+    return true;
+  };
+
   // Add to Wishlist
-  // ===========================
   const addToWishlist = (product) => {
+    if (!checkLogin()) return;
+
     let wishlist =
       JSON.parse(localStorage.getItem("wishlist")) || [];
 
@@ -24,7 +57,12 @@ function Products() {
     );
 
     if (exists) {
-      alert("Product already in wishlist");
+      Swal.fire({
+        icon: "info",
+        title: "Already Added",
+        text: "Product already exists in Wishlist.",
+        confirmButtonColor: "chocolate",
+      });
       return;
     }
 
@@ -35,13 +73,18 @@ function Products() {
       JSON.stringify(wishlist)
     );
 
-    alert("Added to Wishlist");
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Added to Wishlist Successfully",
+      confirmButtonColor: "chocolate",
+    });
   };
 
-  // ===========================
   // Add to Cart
-  // ===========================
   const addToCart = (product) => {
+    if (!checkLogin()) return;
+
     let cart =
       JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -63,35 +106,47 @@ function Products() {
       JSON.stringify(cart)
     );
 
-    alert("Added to Cart");
+    Swal.fire({
+      icon: "success",
+      title: "Success",
+      text: "Added to Cart Successfully",
+      confirmButtonColor: "chocolate",
+    });
   };
 
-  // ===========================
   // Buy Now
-  // ===========================
   const buyNow = (product) => {
-    let cart =
-      JSON.parse(localStorage.getItem("cart")) || [];
+    if (!checkLogin()) return;
 
-    const exists = cart.find(
+    let orders =
+      JSON.parse(localStorage.getItem("orders")) || [];
+
+    const exists = orders.find(
       (item) => item.name === product.name
     );
 
     if (exists) {
       exists.quantity += 1;
     } else {
-      cart.push({
+      orders.push({
         ...product,
         quantity: 1,
       });
     }
 
     localStorage.setItem(
-      "cart",
-      JSON.stringify(cart)
+      "orders",
+      JSON.stringify(orders)
     );
 
-    navigate("/cart");
+    Swal.fire({
+      icon: "success",
+      title: "Order Confirmed 🐔",
+      text: "Your order has been placed successfully.",
+      confirmButtonColor: "chocolate",
+    }).then(() => {
+      navigate("/dashboard");
+    });
   };
 
   return (

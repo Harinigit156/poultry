@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import './Cart.css';
 import Ok from "../assets/Ok.png";
+import Swal from "sweetalert2";
 function Cart() {
   const [cart, setCart] = useState([]);
 
@@ -53,7 +54,33 @@ function Cart() {
     (total, item) => total + item.price * item.quantity,
     0
   );
+const checkout = () => {
+  
+  const previousOrders =
+    JSON.parse(localStorage.getItem("orders")) || [];
 
+  
+  const updatedOrders = [...previousOrders, ...cart];
+
+  
+  localStorage.setItem(
+    "orders",
+    JSON.stringify(updatedOrders)
+  );
+
+  
+  localStorage.removeItem("cart");
+  setCart([]);
+ Swal.fire({
+       icon: "success",
+       title: "Your Orders has been placed",
+       
+       background: "beige",
+       confirmButtonColor:"chocolate",
+     });
+  
+  navigate("/dashboard#orders");
+};
   return (
     <div className="cart-page">
       <div className="Ok-animation">
@@ -134,9 +161,9 @@ function Cart() {
             Grand Total : ₹ {grandTotal}
           </h2>
 
-          <button>
-            Proceed to Checkout
-          </button>
+        <button onClick={checkout}>
+  Proceed to Checkout
+</button>
         </>
       )}
     </div>

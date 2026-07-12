@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import './Register.css';
+import "./Register.css";
 import egggif from "../assets/egggif.gif";
+import Swal from "sweetalert2";
 function Register() {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,40 +12,50 @@ function Register() {
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
-
     e.preventDefault();
 
     try {
-
       const res = await axios.post(
         "http://localhost:5000/api/auth/register",
         {
           name,
           email,
-          password
+          password,
         }
       );
 
-      if (res.data.message === "Registration Successful") {
+      console.log("Response:", res.data);
 
-        alert("Registration Successful");
-
+    
+      if (res.status === 200 || res.status === 201) {
+      Swal.fire({
+  icon: "success",
+  title: "Registration Success",
+  text: res.data.message || "Registration Successful",
+  confirmButtonColor: "chocolate",
+});
         navigate("/login");
-
-      } else {
-
-        alert(res.data.message);
-
       }
-
     } catch (error) {
+      console.error(error);
 
-      console.log(error);
-
-      alert("Something went wrong");
-
+      if (error.response) {
+  Swal.fire({
+    icon: "error",
+    title: "Registration Failed",
+    text: error.response.data.message,
+    confirmButtonColor: "red",
+  });
+  navigate("/login");
+} else {
+  Swal.fire({
+    icon: "error",
+    title: "Server Error",
+    text: "Server not responding",
+    confirmButtonColor: "red",
+  });
+}
     }
-
   };
 
   return (
@@ -59,56 +69,48 @@ function Register() {
       <h1>Register</h1>
 
       <form onSubmit={handleRegister}>
-
         <input
           type="text"
           placeholder="Name"
           value={name}
-          onChange={(e) =>
-            setName(e.target.value)
-          }
+          onChange={(e) => setName(e.target.value)}
           required
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <input
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <button type="submit" className="register">
           Register
         </button>
-
       </form>
 
       <p>
         Already have an account?{" "}
-        <Link to="/login">
-          Login
-        </Link>
+        <Link to="/login">Login</Link>
       </p>
-
     </div>
   );
 }

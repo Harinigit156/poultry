@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTrash, FaShoppingCart } from "react-icons/fa";
 import './Wishlist.css';
 import Rooster from "../assets/Rooster.png";
+import Swal from "sweetalert2";
 function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
 
@@ -54,7 +55,13 @@ function Wishlist() {
 
     removeFromWishlist(product.name);
 
-    alert("Moved to Cart");
+    Swal.fire({
+      icon: "success",
+      title: "Moved to Cart",
+      
+      background: "beige",
+      confirmButtonColor:"chocolate",
+    });
   };
 
   return (

@@ -12,6 +12,7 @@
 }
 .dash h2{
   font-size: 50px;
+  color: chocolate;
 }
 .link
 {
@@ -33,4 +34,104 @@
   height: 280px;
   position: absolute;
   left: 75%;
+}
+
+
+.orders {
+    margin-top: 50px;
+}
+
+.orders h2 {
+    text-align: center;
+    color: black;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+
+
+.order-card {
+    width: 350px;
+    margin: 20px auto;
+    padding: 20px;
+
+    background: whitesmoke;
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow: 0px 5px 18px rgba(0,0,0,0.15);
+
+    transition: 0.3s;
+}
+
+.order-card:hover {
+    transform: translateY(-8px);
+}
+
+.order-card img {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
+.order-card h3 {
+    margin-top: 15px;
+    color: #4E342E;
+}
+
+.order-card p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 18px;
+}
+
+.order-card h4 {
+    color: #2E7D32;
+    margin: 15px 0;
+}
+
+/* Cancel Button */
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: chocolate;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.cancel-btn:hover {
+    background: gainsboro;
+    transform: scale(1.01);
+    color: black;
+}
+.logout
+{
+background-color: chocolate;
+color: white;
+font-size: 30px;
+border: 4px solid black;
+width:150px;
+padding: 10px 10px;
+margin-bottom: 25px;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+border-radius: 15px;
+transition: 0.3s;
+}
+.logout:hover{
+ color: black;
+ background-color: ghostwhite;
+ opacity: 0.4s;
+ cursor: pointer;
 }

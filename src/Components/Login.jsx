@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import './Login.css';
 import gif from "../assets/gif.gif";
-
+import Swal from "sweetalert2";
 function Login() {
 
   const [email, setEmail] = useState("");
@@ -29,16 +29,26 @@ function Login() {
         JSON.stringify(res.data.user)
       );
 
-      alert("Login Successful");
+      Swal.fire({
+        icon: "success",
+        
+        text: "Login Successfull",
+        background: "white",
+        confirmButtonColor:"chocolate",
+      });
 
       navigate("/dashboard");
 
     } catch (error) {
 
-      alert(
-        error.response?.data?.message ||
-        "Login Failed"
-      );
+     Swal.fire({
+  icon: "error",
+  title: "Login Failed",
+  text:
+    error.response?.data?.message ||
+    "Login Failed",
+  confirmButtonColor: "chocolate",
+});
 
     }
   };
