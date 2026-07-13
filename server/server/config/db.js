@@ -2,13 +2,11 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb://127.0.0.1:27017/poultryDB"
-    );
+    await mongoose.connect(process.env.MONGO_URI);
 
-    console.log("MongoDB Connected");
+    console.log("MongoDB Atlas Connected");
   } catch (error) {
-    console.error("Database Connection Error:", error);
+    console.error("Database Connection Error:", error.message);
     process.exit(1);
   }
 };
