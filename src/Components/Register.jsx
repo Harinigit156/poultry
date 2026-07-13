@@ -16,7 +16,7 @@ function Register() {
 
     try {
       const res = await axios.post(
-        "http://poultry-2-i927.onrender.com//api/auth/register",
+        "http://poultry-2-i927.onrender.com/api/auth/register",
         {
           name,
           email,

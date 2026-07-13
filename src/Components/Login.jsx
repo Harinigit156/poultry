@@ -17,7 +17,7 @@ function Login() {
     try {
 
       const res = await axios.post(
-        "http://poultry-2-i927.onrender.com//api/auth/login",
+        "http://poultry-2-i927.onrender.com/api/auth/login",
         {
           email,
           password,
