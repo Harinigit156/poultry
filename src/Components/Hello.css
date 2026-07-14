@@ -144,7 +144,7 @@ font-style:italic;
 .p1
 {
   position: absolute;
-  top: 110%;
+  top: 105%;
   left: 21.5%;
   font-size: 20px;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -154,7 +154,7 @@ font-style:italic;
 .p2
 {
   position: absolute;
-  top: 110%;
+  top: 105%;
   left: 61%;
   font-size: 20px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
