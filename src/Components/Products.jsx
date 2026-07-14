@@ -113,42 +113,104 @@ function Products() {
       confirmButtonColor: "chocolate",
     });
   };
+const buyNow = async (product) => {
+  if (!checkLogin()) return;
 
-  // Buy Now
-  const buyNow = (product) => {
-    if (!checkLogin()) return;
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
-    let orders =
-      JSON.parse(localStorage.getItem("orders")) || [];
+  const { value: formValues } = await Swal.fire({
+    title: "Delivery Details",
+    html: `
+      <input
+        id="swal-phone"
+        class="swal2-input"
+        placeholder="Contact Number"
+        value="${user.phone || ""}"
+      >
 
-    const exists = orders.find(
-      (item) => item.name === product.name
-    );
+      <textarea
+        id="swal-address"
+        class="swal2-textarea"
+        placeholder="Delivery Address"
+      >${user.address || ""}</textarea>
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    confirmButtonText: "Place Order",
+    confirmButtonColor: "chocolate",
 
-    if (exists) {
-      exists.quantity += 1;
-    } else {
-      orders.push({
-        ...product,
-        quantity: 1,
-      });
-    }
+    preConfirm: () => {
+      const phone = document
+        .getElementById("swal-phone")
+        .value.trim();
 
-    localStorage.setItem(
-      "orders",
-      JSON.stringify(orders)
-    );
+      const address = document
+        .getElementById("swal-address")
+        .value.trim();
 
-    Swal.fire({
-      icon: "success",
-      title: "Order Confirmed 🐔",
-      text: "Your order has been placed successfully.",
-      confirmButtonColor: "chocolate",
-    }).then(() => {
-      navigate("/dashboard");
-    });
-  };
+      if (!phone || !address) {
+        Swal.showValidationMessage(
+          "Please enter Contact Number and Address"
+        );
+        return false;
+      }
 
+      if (!/^[6-9]\d{9}$/.test(phone)) {
+        Swal.showValidationMessage(
+          "Please enter a valid 10-digit mobile number"
+        );
+        return false;
+      }
+
+      return {
+        phone,
+        address,
+      };
+    },
+  });
+
+  // User clicked Cancel
+  if (!formValues) return;
+
+  // Save phone and address to logged-in user
+  user.phone = formValues.phone;
+  user.address = formValues.address;
+
+  localStorage.setItem(
+    "user",
+    JSON.stringify(user)
+  );
+
+  // Get previous orders
+  let orders =
+    JSON.parse(localStorage.getItem("orders")) || [];
+
+  // Add new order
+  orders.push({
+     ...product,
+  quantity: 1,
+  phone: formValues.phone,
+  address: formValues.address,
+  orderDate: new Date().toLocaleString(),
+  });
+
+  // Save orders
+  localStorage.setItem(
+    "orders",
+    JSON.stringify(orders)
+  );
+
+  // Success message
+  Swal.fire({
+    icon: "success",
+    title: "Order Placed Successfully 🎉",
+    text: "Your order has been placed successfully.",
+    confirmButtonColor: "chocolate",
+  }).then(() => {
+    navigate("/dashboard");
+  });
+};
+  
   return (
     <div className="products-page">
       <h1>Explore Our Products</h1>
@@ -332,3 +394,5 @@ function Products() {
 }
 
 export default Products;
+   
+  
