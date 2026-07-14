@@ -107,7 +107,7 @@ font-style:italic;
 .chicken
  {
   position: absolute;
-  left: 20%;
+  left: 25%;
   top: 85%;
   width: 200px;
   height: 200px;
@@ -144,7 +144,7 @@ font-style:italic;
 .p1
 {
   position: absolute;
-  top: 110%;
+  top: 115%;
   left: 21.5%;
   font-size: 20px;
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
