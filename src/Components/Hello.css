@@ -187,7 +187,7 @@ font-style:italic;
 
 #about h2 {
  position: absolute;
- top: 114%;
+ top: 120%;
  left:45%;
   text-align: center;
   font-size: 40px;
@@ -225,7 +225,7 @@ font-style:italic;
 .chickenline
 {
   position: absolute;
-  top:143%;
+  top:149%;
   left:65%;
   width: 500px;
   height:300px;
