@@ -27,7 +27,7 @@ function Products() {
     }
   }, [navigate]);
 
-  // Check Login Before Any Action
+ 
   const checkLogin = () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -45,7 +45,7 @@ function Products() {
     return true;
   };
 
-  // Add to Wishlist
+  
   const addToWishlist = (product) => {
     if (!checkLogin()) return;
 
@@ -81,7 +81,7 @@ function Products() {
     });
   };
 
-  // Add to Cart
+  
   const addToCart = (product) => {
     if (!checkLogin()) return;
 
@@ -169,7 +169,7 @@ const buyNow = async (product) => {
     },
   });
 
-  // User clicked Cancel
+  
   if (!formValues) return;
 
   // Save phone and address to logged-in user
@@ -200,7 +200,7 @@ const buyNow = async (product) => {
     JSON.stringify(orders)
   );
 
-  // Success message
+ 
   Swal.fire({
     icon: "success",
     title: "Order Placed Successfully 🎉",
