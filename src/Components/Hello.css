@@ -181,7 +181,7 @@ font-style:italic;
 #about {
  
   margin: 50px auto;
-  padding: 30px;
+  padding: 90px;
   font-family:'Times New Roman', Times, serif;
 }
 
@@ -239,7 +239,7 @@ font-style:italic;
   width:300px;
   height:200px;
 }
-/* Navbar */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -270,7 +270,7 @@ font-style:italic;
   color: chocolate;
 }
 
-/* Right Side */
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -281,7 +281,7 @@ font-style:italic;
   text-decoration: none;
 }
 
-/* Wishlist & Cart */
+
 .nav-item {
   color: black;
   font-size: 20px;
@@ -293,7 +293,7 @@ font-style:italic;
   color: chocolate;
 }
 
-/* Account Button */
+
 .account-btn {
   background-color: chocolate;
   color: white;
