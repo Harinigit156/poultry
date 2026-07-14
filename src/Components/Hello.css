@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  
+  overflow-x: hidden;
 }
 
 
@@ -225,7 +225,7 @@ font-style:italic;
 .chickenline
 {
   position: absolute;
-  top:160%;
+  top:165%;
   left:68%;
   width: 500px;
   height:300px;
