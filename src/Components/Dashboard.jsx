@@ -27,7 +27,7 @@ function Dashboard() {
     };
   }, []);
 
-  // Load Orders
+  
   useEffect(() => {
     const savedOrders =
       JSON.parse(localStorage.getItem("orders")) || [];
@@ -48,7 +48,7 @@ function Dashboard() {
     }
   }, [location]);
 
-  // Cancel Order
+  
   const cancelOrder = (index) => {
     const updatedOrders = orders.filter(
       (_, i) => i !== index
@@ -69,7 +69,7 @@ function Dashboard() {
     });
   };
 
-  // Logout
+  
   const handleLogout = () => {
     Swal.fire({
       title: "Sign Out?",
@@ -83,7 +83,7 @@ function Dashboard() {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("user");
-
+         localStorage.removeItem("orders");
         Swal.fire({
           icon: "success",
           title: "Signed Out",
