@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
-import './Cart.css';
+import { useNavigate } from "react-router-dom";
+import "./Cart.css";
 import Ok from "../assets/Ok.png";
 import Swal from "sweetalert2";
+
 function Cart() {
   const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadCart();
@@ -14,7 +17,6 @@ function Cart() {
     const items = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(items);
   };
-
 
   const increaseQuantity = (name) => {
     const updatedCart = cart.map((item) =>
@@ -40,7 +42,6 @@ function Cart() {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-
   const removeItem = (name) => {
     const updatedCart = cart.filter(
       (item) => item.name !== name
@@ -54,33 +55,119 @@ function Cart() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-const checkout = () => {
-  
-  const previousOrders =
-    JSON.parse(localStorage.getItem("orders")) || [];
 
-  
-  const updatedOrders = [...previousOrders, ...cart];
+  const checkout = async () => {
+    const user = JSON.parse(localStorage.getItem("user")) || {};
 
-  
-  localStorage.setItem(
-    "orders",
-    JSON.stringify(updatedOrders)
-  );
+    if (cart.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Cart is Empty",
+        text: "Please add products to your cart.",
+        confirmButtonColor: "chocolate",
+      });
+      return;
+    }
 
-  
-  localStorage.removeItem("cart");
-  setCart([]);
- Swal.fire({
-       icon: "success",
-       title: "Your Orders has been placed",
-       
-       background: "beige",
-       confirmButtonColor:"chocolate",
-     });
-  
-  navigate("/dashboard#orders");
-};
+    const { value: formValues } = await Swal.fire({
+      title: "Delivery Details",
+      html: `
+        <input
+          id="swal-phone"
+          class="swal2-input"
+          placeholder="Contact Number"
+          value="${user.phone || ""}"
+        >
+
+        <textarea
+          id="swal-address"
+          class="swal2-textarea"
+          placeholder="Delivery Address"
+        >${user.address || ""}</textarea>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Place Order",
+      confirmButtonColor: "chocolate",
+
+      preConfirm: () => {
+        const phone = document
+          .getElementById("swal-phone")
+          .value.trim();
+
+        const address = document
+          .getElementById("swal-address")
+          .value.trim();
+
+        if (!phone || !address) {
+          Swal.showValidationMessage(
+            "Please enter Contact Number and Address"
+          );
+          return false;
+        }
+
+        if (!/^[6-9]\d{9}$/.test(phone)) {
+          Swal.showValidationMessage(
+            "Enter a valid 10-digit mobile number"
+          );
+          return false;
+        }
+
+        return {
+          phone,
+          address,
+        };
+      },
+    });
+
+    if (!formValues) return;
+
+    // Save phone & address
+    user.phone = formValues.phone;
+    user.address = formValues.address;
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(user)
+    );
+
+    // Previous Orders
+    const previousOrders =
+      JSON.parse(localStorage.getItem("orders")) || [];
+
+    // Convert Cart to Orders
+    const newOrders = cart.map((item) => ({
+      ...item,
+      customerName: user.name,
+      phone: formValues.phone,
+      address: formValues.address,
+      orderDate: new Date().toLocaleString(),
+    }));
+
+    const updatedOrders = [
+      ...previousOrders,
+      ...newOrders,
+    ];
+
+    localStorage.setItem(
+      "orders",
+      JSON.stringify(updatedOrders)
+    );
+
+    // Clear Cart
+    localStorage.removeItem("cart");
+    setCart([]);
+
+    Swal.fire({
+      icon: "success",
+      title: "Order Placed Successfully 🎉",
+      text: "Your order has been placed successfully.",
+      background: "beige",
+      confirmButtonColor: "chocolate",
+    }).then(() => {
+      navigate("/dashboard#orders");
+    });
+  };
+
   return (
     <div className="cart-page">
       <div className="Ok-animation">
@@ -113,7 +200,6 @@ const checkout = () => {
               <p>Price : ₹ {item.price}</p>
 
               <div>
-
                 <button
                   onClick={() =>
                     decreaseQuantity(item.name)
@@ -138,7 +224,6 @@ const checkout = () => {
                 >
                   <FaPlus />
                 </button>
-
               </div>
 
               <h4>
@@ -152,18 +237,14 @@ const checkout = () => {
               >
                 <FaTrash /> Remove
               </button>
-
-              
             </div>
           ))}
 
-          <h2>
-            Grand Total : ₹ {grandTotal}
-          </h2>
+          <h2>Grand Total : ₹ {grandTotal}</h2>
 
-        <button onClick={checkout}>
-  Proceed to Checkout
-</button>
+          <button onClick={checkout}>
+            Proceed to Checkout
+          </button>
         </>
       )}
     </div>
