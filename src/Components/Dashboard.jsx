@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./Dashboard.css";
 import Swal from "sweetalert2";
+
 import c from "../assets/c.png";
 import h from "../assets/h.png";
 
 function Dashboard() {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user =
+    JSON.parse(localStorage.getItem("user")) || {};
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -27,7 +35,7 @@ function Dashboard() {
     setOrders(savedOrders);
   }, []);
 
-  
+  // Scroll to Orders Section
   useEffect(() => {
     if (location.hash === "#orders") {
       const section = document.getElementById("orders");
@@ -39,51 +47,57 @@ function Dashboard() {
       }
     }
   }, [location]);
+
+  // Cancel Order
   const cancelOrder = (index) => {
-  const updatedOrders = orders.filter((_, i) => i !== index);
+    const updatedOrders = orders.filter(
+      (_, i) => i !== index
+    );
 
-  setOrders(updatedOrders);
+    setOrders(updatedOrders);
 
-  localStorage.setItem(
-    "orders",
-    JSON.stringify(updatedOrders)
-  );
-  Swal.fire({
-    icon: "success",
-    title: "Order Cancellation",
-    text: "Your Order has been ordered Successfully",
-    background: "white",
-    confirmButtonColor:"chocolate",
-  });
-};
-const handleLogout = () => {
-  Swal.fire({
-    title: "Sign Out?",
-    text: "Are you sure you want to sign out?",
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Yes",
-    cancelButtonText: "No",
-    confirmButtonColor: "red",
-    cancelButtonColor: "gray",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      localStorage.removeItem("user");
+    localStorage.setItem(
+      "orders",
+      JSON.stringify(updatedOrders)
+    );
 
-      Swal.fire({
-        icon: "success",
-        title: "Signed Out",
-        text: "You have been signed out successfully.",
-        confirmButtonColor: "chocolate",
-      }).then(() => {
-        navigate("/login");
-      });
-    }
-  });
-};
+    Swal.fire({
+      icon: "success",
+      title: "Order Cancelled",
+      text: "Your order has been cancelled successfully.",
+      confirmButtonColor: "chocolate",
+    });
+  };
+
+  // Logout
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Sign Out?",
+      text: "Are you sure you want to sign out?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      confirmButtonColor: "red",
+      cancelButtonColor: "gray",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("user");
+
+        Swal.fire({
+          icon: "success",
+          title: "Signed Out",
+          text: "You have been signed out successfully.",
+          confirmButtonColor: "chocolate",
+        }).then(() => {
+          navigate("/login");
+        });
+      }
+    });
+  };
+
   return (
     <div style={{ padding: "30px" }} className="dash">
-
       <img
         src={c}
         alt="Chicken"
@@ -98,31 +112,33 @@ const handleLogout = () => {
 
       <h1>My Account</h1>
 
-      {user ? (
+      {user.name ? (
         <>
           <h2>Welcome {user.name}!</h2>
-          <p>Email: {user.email}</p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
         </>
       ) : (
         <h2>Please Login</h2>
       )}
-      {user && (
-  <button
-    className="logout"
-    onClick={handleLogout}
-  >
-    Logout
-  </button>
-)}
+
+      {user.name && (
+        <button
+          className="logout"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      )}
+
       <br />
 
       <Link to="/" className="link">
         HOME
       </Link>
-     
-      
-      <div id="orders" className="orders">
 
+      <div id="orders" className="orders">
         <h2>My Orders</h2>
 
         {orders.length === 0 ? (
@@ -141,25 +157,52 @@ const handleLogout = () => {
 
               <h3>{item.name}</h3>
 
-              <p>Price : ₹ {item.price}</p>
+              <p>
+                <strong>Price:</strong> ₹{item.price}
+              </p>
 
-              <p>Quantity : {item.quantity}</p>
+              <p>
+                <strong>Quantity:</strong>{" "}
+                {item.quantity}
+              </p>
+
+              <p>
+                <strong>Customer:</strong>{" "}
+                {item.customerName || user.name}
+              </p>
+
+              <p>
+                <strong>Phone:</strong>{" "}
+                {item.phone}
+              </p>
+
+              <p>
+                <strong>Address:</strong>{" "}
+                {item.address}
+              </p>
+
+              <p>
+                <strong>Order Date:</strong>{" "}
+                {item.orderDate}
+              </p>
 
               <h4>
-                Total : ₹ {item.price * item.quantity}
+                Total : ₹
+                {item.price * item.quantity}
               </h4>
+
               <button
-    className="cancel-btn"
-    onClick={() => cancelOrder(index)}
-  >
-    Cancel Order
-  </button>
+                className="cancel-btn"
+                onClick={() =>
+                  cancelOrder(index)
+                }
+              >
+                Cancel Order
+              </button>
             </div>
           ))
         )}
-
       </div>
- 
     </div>
   );
 }
